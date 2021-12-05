@@ -17,12 +17,11 @@ import java.util.Optional;
 public class ChangePasswordServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.sendRedirect("/");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserDao userDao = new UserDao();
-
         String username = request.getParameter("username"), password = request.getParameter("password1");
         request.setAttribute("username", username);
 
@@ -38,17 +37,14 @@ public class ChangePasswordServlet extends HttpServlet {
             return;
         }
 
-        Optional<UserEntity> user = null;
-        try {
-            user = userDao.getAll().stream().filter(u -> u.getUsername().equals(username)).findAny();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        UserDao userDao = new UserDao();
+        UserEntity user = userDao.getUser(username);
+        user.setPassword(password);
+        userDao.update(user);
 
-        user.get().setPassword(password);
-        userDao.update(user.get());
+        HttpSession session = request.getSession(true); // create session
+        session.setAttribute("user", user);
 
-        request.getSession().setAttribute("user", user);
         response.sendRedirect("/details");
     }
 }

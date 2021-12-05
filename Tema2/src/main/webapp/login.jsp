@@ -13,45 +13,48 @@
 <body>
 
 <div class="d-flex align-items-center justify-content-center">
-    <div class = "column">
-        <h1 style="text-align: center"> Login Page </h1>
+    <div class="column">
+        <h1 style="text-align: center; margin-top:30%"> Login Page </h1>
 
-    <div class="row" style="width: 500px">
-        <form method="post" action="/login">
-            <div class="form-group">
-                <label style="padding: 10px 10px 10px 0px"><b>Username *</b></label>
-                <input name="username" type="text" class="form-control" id="inputUsername"
-                       placeholder="Enter username">
-            </div>
-            <div class="form-group">
-                <label for="inputPass" style="padding: 10px 10px 10px 0px"><b>Password *</b></label>
-                <input name="password" type="password" class="form-control" id="inputPass"
-                       placeholder="Password">
-            </div>
+        <div class="row" style="width: 500px">
+            <form>
+                <div class="form-group">
+                    <label style="padding: 10px 10px 10px 0px"><b>Username *</b></label>
+                    <input name="username" type="text" class="form-control" id="inputUsername"
+                           placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="inputPass" style="padding: 10px 10px 10px 0px"><b>Password *</b></label>
+                    <input name="password" type="password" class="form-control" id="inputPass"
+                           placeholder="Password">
+                </div>
 
-            <div style="color: red; padding: 10px 10px 10px 0px">${message}</div>
+                <div style="color: red; padding: 10px 10px 10px 0px">${message}</div>
 
-    <div class="d-flex justify-content-center align-items-center container" style="margin: 20px 0px 0px 0px">
-        <div class="column">
-            <div class="row">
-                <button type="submit" class="btn btn-primary">Login</button>
-            </div>
-            <div class="row" style="margin: 5px 0px 0px 40px">
-                <a href="/signup.jsp">Sign up</a>
-            </div>
-            <div class="row" style="margin: 5px 0px 0px 5px">
-                    <button style="background: transparent; text-decoration: underline;
+                <div class="d-flex justify-content-center align-items-center container"
+                     style="margin: 20px 0px 0px 0px">
+                    <div class="form-group">
+                        <div class="column">
+                            <div class="row">
+                                <button  formaction="/login" formmethod="post"  class="btn btn-primary">Login</button>
+                            </div>
+                            <div class="row" style="margin: 5px 0px 0px 40px">
+                                <a href="/signup.jsp">Sign up</a>
+                            </div>
+                            <div class="row" style="margin: 5px 0px 0px 5px">
+                                <button style="background: transparent; text-decoration: underline;
                             color: cornflowerblue;
                              text-decoration-color: cornflowerblue; border: none"
-                            onclick="form.action='/forgotPassword'; form.method='post'"
-                            type="submit">Forgot password?
-                    </button>
-            </div>
+                                        formaction="/forgotPassword" formmethod="post">
+                                    Forgot password?
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-    </form>
-</div>
-</div>
 </div>
 </body>
 </html>

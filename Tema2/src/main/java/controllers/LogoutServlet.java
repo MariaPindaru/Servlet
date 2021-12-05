@@ -16,7 +16,7 @@ public class LogoutServlet extends HttpServlet {
         request.getSession(false).invalidate();
 
         response.setContentType("text/html");
-        response.sendRedirect("/login");
+        response.sendRedirect("/");
     }
 
     @Override

@@ -20,42 +20,42 @@ import java.text.SimpleDateFormat;
 public class DetailsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        UserDetailsDao userDetailsDao = new UserDetailsDao();
-
         UserEntity user = UserEntity.class.cast(request.getSession().getAttribute("user"));
+
+        UserDetailsDao userDetailsDao = new UserDetailsDao();
         UserdetailsEntity details = userDetailsDao.get(user.getIdUser());
         details.setName(request.getParameter("name"));
         details.setAddress(request.getParameter("address"));
-        details.setBirthdate(Date.valueOf(request.getParameter("birthdate")));
-
+        details.setBirthdate(request.getParameter("birthdate").isEmpty() ? null : Date.valueOf(request.getParameter("birthdate")));
         userDetailsDao.update(details);
 
         request.setAttribute("username", user.getUsername());
-        request.setAttribute("name", details.getName());
-        request.setAttribute("address", details.getAddress());
-        request.setAttribute("birthdate", details.getBirthdate().toString());
+        setDetailsAttributes(request, response, details);
 
-        RequestDispatcher rd = request.getRequestDispatcher("/details.jsp");
-        rd.forward(request, response);
+        request.getRequestDispatcher("/details.jsp").forward(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         if(request.getSession(false).getAttribute("user") == null) {
-            response.sendRedirect("/login");
+            response.sendRedirect("/");
             return;
         }
 
-        UserDetailsDao userDetailsDao = new UserDetailsDao();
         UserEntity user = UserEntity.class.cast(request.getSession().getAttribute("user"));
         request.setAttribute("username", user.getUsername());
 
+        UserDetailsDao userDetailsDao = new UserDetailsDao();
         UserdetailsEntity details = userDetailsDao.get(user.getIdUser());
+        setDetailsAttributes(request, response, details);
+
+        request.getRequestDispatcher("/details.jsp").forward(request,response);
+    }
+
+    private void setDetailsAttributes(HttpServletRequest request, HttpServletResponse response, UserdetailsEntity details) throws ServletException, IOException {
         request.setAttribute("name", details.getName());
         request.setAttribute("address", details.getAddress());
-        request.setAttribute("birthdate", details.getBirthdate().toString());
-
-        RequestDispatcher rd = request.getRequestDispatcher("/details.jsp");
-        rd.forward(request, response);
+        request.setAttribute("birthdate", details.getBirthdate() == null ? "" : details.getBirthdate().toString());
     }
+
 }

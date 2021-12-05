@@ -16,7 +16,6 @@
 
     <filter-mapping>
         <filter-name>NoBrowserCacheFilter</filter-name>
-        <url-pattern>/changePassword</url-pattern>
         <url-pattern>/details</url-pattern>
     </filter-mapping>
 

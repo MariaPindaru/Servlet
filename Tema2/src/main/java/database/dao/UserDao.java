@@ -31,4 +31,35 @@ public class UserDao implements IDao<UserEntity> {
     public void create(UserEntity user) {
         connection.executeTransaction(entityManager -> entityManager.persist(user));
     }
+
+    public UserEntity getUser(String username, String password) {
+        Optional<UserEntity> user = null;
+        try {
+            user = getAll().stream().filter(u -> u.getUsername().equals(username) && u.getPassword().equals(password)).findAny();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        if (user.isPresent())
+            return user.get();
+
+        return null;
+    }
+
+    public UserEntity getUser(String username) {
+        Optional<UserEntity> user = null;
+        try {
+            user = getAll().stream().filter(u -> u.getUsername().equals(username)).findAny();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        if (user.isPresent())
+            return user.get();
+
+        return null;
+    }
+
 }

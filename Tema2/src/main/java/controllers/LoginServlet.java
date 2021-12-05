@@ -12,28 +12,27 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
+@WebServlet(name = "LoginServlet", urlPatterns = {"/", "/login"})
 public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserDao userDao = new UserDao();
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        Optional<UserEntity> user = null;
-        try {
-            user = userDao.getAll().stream().filter(u -> u.getUsername().equals(username) && u.getPassword().equals(password)).findAny();
-
-        } catch (Exception e) {
-            System.out.println(e);
+        response.setContentType("text/html");
+        if (username.isEmpty() || password.isEmpty()) {
+            request.setAttribute("message", "Username and password are required. Please retry.");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            return;
         }
 
-        response.setContentType("text/html");
-        if (user.isPresent()) {
-            HttpSession session = request.getSession(true); // create session
-            session.setAttribute("user", user.get());
+        UserDao userDao = new UserDao();
+        UserEntity user = userDao.getUser(username, password);
 
+        if (user != null) {
+            HttpSession session = request.getSession(true); // create session
+            session.setAttribute("user", user);
             response.sendRedirect("/details");
         } else {
             request.setAttribute("message", "Unknown username/password. Please retry.");

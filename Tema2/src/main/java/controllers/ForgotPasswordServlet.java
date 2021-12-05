@@ -18,14 +18,7 @@ public class ForgotPasswordServlet extends HttpServlet {
         UserDao userDao = new UserDao();
         String username = request.getParameter("username");
 
-       boolean usernameExists = false;
-        try {
-            usernameExists = userDao.getAll().stream().anyMatch(u -> u.getUsername().equals(username));
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        if (usernameExists) {
+        if (userDao.getUser(username) != null) {
             request.setAttribute("username", username);
             request.getRequestDispatcher("/forgotPassword.jsp").forward(request, response);
         }
@@ -36,9 +29,6 @@ public class ForgotPasswordServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(request.getSession(false).getAttribute("user") == null) {
-            response.sendRedirect("/login");
-            return;
-        }
+        response.sendRedirect("/");
     }
 }
