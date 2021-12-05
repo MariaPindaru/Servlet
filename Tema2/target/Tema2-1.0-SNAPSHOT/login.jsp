@@ -13,10 +13,11 @@
 <body>
 
 <div class="d-flex align-items-center justify-content-center">
+    <div class = "column">
+        <h1 style="text-align: center"> Login Page </h1>
 
     <div class="row" style="width: 500px">
         <form method="post" action="/login">
-            <h1 style="margin: 80px 0px 50px 30%"> Login Page </h1>
             <div class="form-group">
                 <label style="padding: 10px 10px 10px 0px"><b>Username *</b></label>
                 <input name="username" type="text" class="form-control" id="inputUsername"
@@ -42,7 +43,7 @@
                     <button style="background: transparent; text-decoration: underline;
                             color: cornflowerblue;
                              text-decoration-color: cornflowerblue; border: none"
-                            onclick="form.action='/changePassword'; form.method='get'"
+                            onclick="form.action='/forgotPassword'; form.method='post'"
                             type="submit">Forgot password?
                     </button>
             </div>
@@ -51,6 +52,6 @@
     </form>
 </div>
 </div>
-
+</div>
 </body>
 </html>
