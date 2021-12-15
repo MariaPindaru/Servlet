@@ -56,7 +56,6 @@
                         <b>Birthdate </b>
                     </label>
                     <input name="birthdate" type="date" id="inputBirthdate"
-                           value="2000-01-01"
                            min="1950-01-01" max="2021-01-01">
                 </div>
 

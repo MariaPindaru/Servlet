@@ -21,6 +21,12 @@ public class NoBrowserCacheFilter implements Filter {
         response.setHeader("Pragma", "no-cache");
         response.setDateHeader("Expires", -1);
 
+        try {
         chain.doFilter(request, response);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
     }
 }
